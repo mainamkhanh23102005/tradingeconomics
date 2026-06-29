@@ -21,7 +21,8 @@ export function exportComparisonCsv(series: IndicatorSeries[]): void {
     lookup.set(s.countryiso3code, byDate);
   }
 
-  const header = ['Year', ...countries.map((iso3) => countryName(iso3))].join(',');
+  const q = (s: string) => `"${s.replace(/"/g, '""')}"`;
+  const header = ['Year', ...countries.map((iso3) => q(countryName(iso3)))].join(',');
   const rows = dates.map((date) => {
     const cells = countries.map((iso3) => {
       const v = lookup.get(iso3)?.get(date) ?? null;
